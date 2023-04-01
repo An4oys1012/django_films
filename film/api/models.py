@@ -3,12 +3,6 @@ from django.db import models
 from datetime import date
 from django.urls import reverse
 
-# from datetime import datetime, timedelta
-#
-# import jwt
-# from django.conf import settings
-# from django.contrib.auth.models import AbstractUser, BaseUserManager
-
 
 class Category(models.Model):
     """Категории"""
