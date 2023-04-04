@@ -1,13 +1,7 @@
 from django.db import models
 
-from datetime import date
+from datetime import date, datetime, timedelta
 from django.urls import reverse
-
-# from datetime import datetime, timedelta
-#
-# import jwt
-# from django.conf import settings
-# from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 class Category(models.Model):
@@ -27,7 +21,8 @@ class Category(models.Model):
 class Actor(models.Model):
     """Актеры и режиссеры"""
     name = models.CharField("Имя", max_length=100)
-    age = models.PositiveSmallIntegerField("Возраст", default=0)
+    age = models.DateField("Возраст", default=date.today)
+    height = models.PositiveSmallIntegerField("Рост", default=180)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="actors/")
 
@@ -80,7 +75,6 @@ class Movie(models.Model):
         "Длительность", default=20, help_text="указывать время в минутах"
     )
     age = models.PositiveSmallIntegerField("Возраст", default=16)
-
     url = models.SlugField(max_length=130, unique=True)
     draft = models.BooleanField("Черновик", default=False)
 
@@ -145,6 +139,7 @@ class Reviews(models.Model):
     email = models.EmailField()
     name = models.CharField("Имя", max_length=100)
     text = models.TextField("Сообщение", max_length=5000)
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
     parent = models.ForeignKey(
         'self', verbose_name="Родитель", on_delete=models.SET_NULL, blank=True, null=True
     )
