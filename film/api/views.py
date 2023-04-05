@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from .models import Movie, Category, Actor, Genre, Rating, Reviews
-
+from .models import Movie
+from django.views.generic import ListView, DetailView
 
 class MoviesView(ListView):
     """Список фильмов"""
     model = Movie
-    template_name = "movies/movie_list.html
-
+    queryset = Movie.objects.filter(draft=False)
 
 class MovieDetailView(DetailView):
     """Полное описание фильма"""
