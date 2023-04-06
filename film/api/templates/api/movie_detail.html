@@ -116,7 +116,7 @@
                 {% endfor %}
             </p>
             <p class="editContent">
-                {{ movie.description }}
+                {{ movie.description|safe }}
             </p>
         </div>
         <hr>
@@ -183,7 +183,7 @@
                             </a>
                             <div class="media-body">
                                 <h5 class="mt-0 editContent">{{ rew.name }}</h5>
-                                <h5 class="mt-0 editContent">{{ rew.time_create }}</h5>
+                                <p class="mt-0 editContent">{{ rew.time_create }}</p>
                                 <p class="mt-2 editContent">{{ rew.text }}</p>
                             </div>
                         </div>
