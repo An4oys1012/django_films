@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'api',
+    'snowpenguin.django.recaptcha3',
 ]
 
 MIDDLEWARE = [
@@ -209,3 +210,9 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+
+RECAPTCHA_PUBLIC_KEY = "6LdVRmolAAAAAGdClhwqPmYNpXvcRV3Ll9jtT00z"
+RECAPTCHA_PRIVATE_KEY = "6LdVRmolAAAAAFwBsOnGfKgkLn4qzxDZpRn-3elh"
+RECAPTCHA_DEFAULT_ACTION = 'generic'
+RECAPTCHA_SCORE_THRESHOLD = 0.5
