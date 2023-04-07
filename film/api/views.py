@@ -32,6 +32,7 @@ class MovieDetailView(GenreYear, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["star_form"] = RatingForm()
+        context["form"] = ReviewForm()
         return context
 
 
@@ -103,7 +104,7 @@ class Search(ListView):
     """Поиск фильмов"""
     paginate_by = 3
 
-с
+
     def get_queryset(self):
         q = self.request.GET.get('q')
         a = "".join(q[0].upper()) + q[1:]
