@@ -1,11 +1,11 @@
-from django.db import models
+from datetime import date
 
-from datetime import date, datetime, timedelta
+from django.db import models
 from django.urls import reverse
 
 
 class Category(models.Model):
-    """Категории"""
+    """Category"""
     name = models.CharField("Категория", max_length=150)
     description = models.TextField("Описание")
     url = models.SlugField(max_length=160, unique=True)
@@ -19,7 +19,7 @@ class Category(models.Model):
 
 
 class Actor(models.Model):
-    """Актеры и режиссеры"""
+    """Actors and directors"""
     name = models.CharField("Имя", max_length=100)
     age = models.DateField("Возраст", default=date.today)
     height = models.PositiveSmallIntegerField("Рост", default=180)
@@ -38,7 +38,7 @@ class Actor(models.Model):
 
 
 class Genre(models.Model):
-    """Жанры"""
+    """Genre"""
     name = models.CharField("Имя", max_length=100)
     description = models.TextField("Описание")
     url = models.SlugField(max_length=160, unique=True)
@@ -52,7 +52,7 @@ class Genre(models.Model):
 
 
 class Movie(models.Model):
-    """Фильм"""
+    """Film"""
     title = models.CharField("Название", max_length=100)
     tagline = models.CharField("Слоган", max_length=100, default='')
     description = models.TextField("Описание")
@@ -93,7 +93,7 @@ class Movie(models.Model):
 
 
 class MovieShots(models.Model):
-    """Кадры из фильма"""
+    """Stills from the film"""
     title = models.CharField("Заголовок", max_length=100)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="movie_shots/")
@@ -108,7 +108,7 @@ class MovieShots(models.Model):
 
 
 class RatingStar(models.Model):
-    """Звезда рейтинга"""
+    """Rating star"""
     value = models.SmallIntegerField("Значение", default=0)
 
     def __str__(self):
@@ -121,10 +121,11 @@ class RatingStar(models.Model):
 
 
 class Rating(models.Model):
-    """Рейтинг"""
+    """Rating"""
     ip = models.CharField("IP адрес", max_length=15)
     star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name="звезда")
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="фильм", related_name="ratings")
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="фильм",
+                              related_name="ratings")
 
     def __str__(self):
         return f"{self.star} - {self.movie}"
@@ -135,7 +136,7 @@ class Rating(models.Model):
 
 
 class Reviews(models.Model):
-    """Отзывы"""
+    """Reviews"""
     email = models.EmailField()
     name = models.CharField("Имя", max_length=100)
     text = models.TextField("Сообщение", max_length=5000)
@@ -151,4 +152,3 @@ class Reviews(models.Model):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
-

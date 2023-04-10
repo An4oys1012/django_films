@@ -5,7 +5,7 @@ from .models import Reviews, Rating, RatingStar
 
 
 class ReviewForm(forms.ModelForm):
-    """Форма отзывов"""
+    """Feedback Form"""
     captcha = ReCaptchaField()
 
     class Meta:
@@ -19,7 +19,7 @@ class ReviewForm(forms.ModelForm):
 
 
 class RatingForm(forms.ModelForm):
-    """Форма добавления рейтинга"""
+    """Rating addition form"""
     star = forms.ModelChoiceField(
         queryset=RatingStar.objects.all(), widget=forms.RadioSelect(), empty_label=None
     )

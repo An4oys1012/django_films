@@ -1,9 +1,9 @@
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import *
 
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from .models import *
 
 
 class MovieAdminForm(forms.ModelForm):
@@ -16,13 +16,13 @@ class MovieAdminForm(forms.ModelForm):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    """Категории"""
+    """Category"""
     list_display = ("id", "name", "url")
     list_display_links = ("name",)
 
 
 class ReviewInline(admin.TabularInline):
-    """Отзывы на странице фильма"""
+    """Reviews on the movie page"""
     model = Reviews
     extra = 1
     readonly_fields = ("name", "email")
@@ -41,7 +41,7 @@ class MovieShotsInline(admin.TabularInline):
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    """Фильмы"""
+    """Films"""
     list_display = ("title", "category", "url", "draft")
     list_filter = ("category", "year", "country")
     search_fields = ("title", "category__name")
@@ -79,9 +79,8 @@ class MovieAdmin(admin.ModelAdmin):
 
     get_image.short_description = "Постер"
 
-
     def unpublish(self, request, queryset):
-        """Снять с публикации"""
+        """Remove from publication"""
         row_update = queryset.update(draft=True)
         if row_update == 1:
             message_bit = "1 запись была обновлена"
@@ -89,16 +88,14 @@ class MovieAdmin(admin.ModelAdmin):
             message_bit = f"{row_update} записей были обновлены"
         self.message_user(request, f"{message_bit}")
 
-
     def publish(self, request, queryset):
-        """Опубликовать"""
+        """To publish"""
         row_update = queryset.update(draft=False)
         if row_update == 1:
             message_bit = "1 запись была обновлена"
         else:
             message_bit = f"{row_update} записей были обновлены"
         self.message_user(request, f"{message_bit}")
-
 
     publish.short_description = "Опубликовать"
     publish.allowed_permissions = ('change',)
@@ -109,20 +106,20 @@ class MovieAdmin(admin.ModelAdmin):
 
 @admin.register(Reviews)
 class ReviewAdmin(admin.ModelAdmin):
-    """Отзывы"""
+    """Reviews"""
     list_display = ("name", "email", "time_create", "parent", "movie", "id")
     readonly_fields = ("name", "email")
 
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
-    """Жанры"""
+    """Genre"""
     list_display = ("name", "url")
 
 
 @admin.register(Actor)
 class ActorAdmin(admin.ModelAdmin):
-    """Актеры"""
+    """Actor"""
     list_display = ("name", "age", "get_image")
     readonly_fields = ("get_image",)
 
@@ -134,13 +131,13 @@ class ActorAdmin(admin.ModelAdmin):
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
-    """Рейтинг"""
+    """Rating"""
     list_display = ("star", "movie", "ip")
 
 
 @admin.register(MovieShots)
 class MovieShotsAdmin(admin.ModelAdmin):
-    """Кадры из фильма"""
+    """Stills from the film"""
     list_display = ("title", "movie", "get_image")
     readonly_fields = ("get_image",)
 
@@ -152,5 +149,5 @@ class MovieShotsAdmin(admin.ModelAdmin):
 
 admin.site.register(RatingStar)
 
-admin.site.site_title = "КИНО_планета"
-admin.site.site_header = "КИНО_планета"
+admin.site.site_title = "KINO_planet"
+admin.site.site_header = "KINO_planet"

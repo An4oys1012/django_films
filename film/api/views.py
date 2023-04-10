@@ -8,7 +8,7 @@ from .models import *
 
 
 class GenreYear:
-    """Жанры и года выхода фильмов"""
+    """Film genres and release years"""
 
     def get_genres(self):
         return Genre.objects.all()
@@ -18,14 +18,14 @@ class GenreYear:
 
 
 class MoviesView(GenreYear, ListView):
-    """Список фильмов"""
+    """List of films"""
     model = Movie
     queryset = Movie.objects.filter(draft=False)
-    paginate_by = 1
+    paginate_by = 6
 
 
 class MovieDetailView(GenreYear, DetailView):
-    """Полное описание фильма"""
+    """Full description of the film"""
     model = Movie
     slug_field = "url"
 
@@ -37,7 +37,7 @@ class MovieDetailView(GenreYear, DetailView):
 
 
 class AddReview(View):
-    """Отзывы"""
+    """Reviews"""
 
     def post(self, request, pk):
         form = ReviewForm(request.POST)
@@ -52,15 +52,15 @@ class AddReview(View):
 
 
 class ActorView(GenreYear, DetailView):
-    """Вывод информации об актере"""
+    """Output of information about the actor"""
     model = Actor
-    template_name = 'movies/actor.html'
+    template_name = 'api/actor.html'
     slug_field = "name"
 
 
 class FilterMoviesView(GenreYear, ListView):
-    """Фильтр фильмов"""
-    paginate_by = 3
+    """Movie Filter"""
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Movie.objects.filter(
@@ -77,7 +77,7 @@ class FilterMoviesView(GenreYear, ListView):
 
 
 class AddStarRating(View):
-    """Добавление рейтинга фильму"""
+    """Adding a rating to a movie"""
 
     def get_client_ip(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -101,9 +101,8 @@ class AddStarRating(View):
 
 
 class Search(ListView):
-    """Поиск фильмов"""
+    """Movie Search"""
     paginate_by = 3
-
 
     def get_queryset(self):
         q = self.request.GET.get('q')
