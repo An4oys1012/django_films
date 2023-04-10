@@ -1,10 +1,10 @@
 from django.db.models import Q
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import redirect
+from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 
-from .models import *
 from .forms import ReviewForm, RatingForm
+from .models import *
 
 
 class GenreYear:
@@ -21,7 +21,7 @@ class MoviesView(GenreYear, ListView):
     """Список фильмов"""
     model = Movie
     queryset = Movie.objects.filter(draft=False)
-    paginate_by = 3
+    paginate_by = 1
 
 
 class MovieDetailView(GenreYear, DetailView):
